@@ -9,7 +9,7 @@ class rotasCategorias{
         //chama o metodo na classe produto para criar um novo produto
             //const produtos = await Produto.listar();
             const categoria = await BD.query(`INSERT INTO categorias (nome, tipo_transacao, gasto_fixo, ativo, id_usuario)
-                    VALUES ($1, $2, $3, $4, $5)`,
+                    VALUES($1, $2, $3, $4, $5)`,
                     [nome, tipo_transacao, gasto_fixo, ativo, id_usuario])
             res.status(201).json(categoria);// retorna o usuario criado com status 201
         }catch(error){
@@ -80,6 +80,32 @@ class rotasCategorias{
             res.status(500).json({message: "Erro ao atualizar a categoria", error: error.menssage})
         }
     }
-}
 
+    //Filtrar por tipo de categoria
+    static async filtrarCategoria(req, res) {
+        // o valor será enviado por parametro na URL, deve ser enviado dessa maneira
+        // ?tipo_transacao=entrada 
+        const {tipo_transacao} = req.query;
+
+    try {
+        const filtros = [];
+        const valores = [];
+
+        if (tipo_transacao) {
+            filtros.push(`tipo_transacao = $${valores.length + 1}`);
+            valores.push(tipo_transacao);
+        }
+
+        const query = `
+        SELECT * FROM categorias WHERE 
+        ${filtros.length ? `WHERE ${filtros.join("AND ")}` : ""}
+        ORDER BY id_categoria DESC
+        `
+        const resultado = await BD.query(query, valores)
+        
+    }catch (error) {
+
+    }
+}
+}
 export default rotasCategorias;

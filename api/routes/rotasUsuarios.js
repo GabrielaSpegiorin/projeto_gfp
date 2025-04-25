@@ -1,5 +1,8 @@
 import { BD } from '../db.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+const SECRET_KEY = "chave_api_gfp"
 
 class rotasUsuarios{
     static async novoUsuario(req, res){ //CERTO
@@ -34,7 +37,7 @@ class rotasUsuarios{
         static async listarUsuarios(req,res){  //CERTO
             try{
                 const usuarios = await BD.query('SELECT * FROM usuarios WHERE ativo = true');
-                res.status(200).json(usuarios); //retorna a lista de usuarios.
+                res.status(200).json(usuarios.rows); //retorna a lista de usuarios.
             }catch(error){
                 res.status(500).json({message:'Erro ao listar os usuários', error: error.message})
             }
@@ -59,6 +62,7 @@ class rotasUsuarios{
         static async atualizarTodos(req,res){ //CERTOO
             const {id_usuario} = req.params;
             const {nome, email, senha, tipo_acesso} = req.body;
+            const senhaCriptografada = await bcrypt.hash(senha, 10)
    
             try{
                 const usuario = await BD.query ('UPDATE usuarios SET nome = $1, email = $2, senha = $3, tipo_acesso = $4 WHERE id_usuario = $5 RETURNING *',
@@ -68,6 +72,7 @@ class rotasUsuarios{
             }catch(error){
                 res.status(500).json({message: "Erro ao atualizar o usuario", error: error.menssage})
             }
+            valores.push(senhaCriptografada);
         }
    
    
@@ -91,8 +96,9 @@ class rotasUsuarios{
                     valores.push(email);
                 }
                 if(senha !== undefined){
+                    const senhaCriptografada = await bcrypt.hash(senha, 10)
                     campos.push(`senha = $${valores.length + 1}`)
-                    valores.push(senha);
+                    valores.push(senhaCriptografada);
                 }
                 if(tipo_acesso !== undefined){
                     campos.push(`tipo_acesso = $${valores.length + 1}`)
@@ -117,8 +123,6 @@ class rotasUsuarios{
                     return res.status(404).json({message: 'Usuário não encontrado'})
                 }
    
-   
-   
                 return res.status(200).json(usuario.rows[0]);
             }
             catch(error){
@@ -133,9 +137,8 @@ class rotasUsuarios{
            
             try{
                 const resultado = await BD.query(
-                    `SELECT id_usuario, nome, email, senha, tipo_acesso
-                    FROM usuarios
-                    WHERE email = $1`,
+                    `SELECT * FROM usuarios
+                     WHERE email = $1 and ativo = true`,
                     [email]
                 );
                 if(resultado.rows.length === 0){
@@ -145,24 +148,48 @@ class rotasUsuarios{
                 const senhaValida = await bcrypt.compare(senha, usuario.senha)
    
                 if(!senhaValida){
-                    return res.status(401).json('Email ou senha inválidos')
+                    return res.status(401).json('Senha incorreta')
                 }
                 //Gerar um novo token para o usuario
-                // const token = jwt.sign(
-                //     //payload
-                //     {id: usuario.id_usuario, nome: usuario.nome, email: usuario.email, senha: usuario.senha, acesso: usuario.tipo_acesso},
-                //     //signature
-                //     SECRET_KEY,
-                //     {expiresIn: '1h'}
-                // )
-                return res.status(200).json({message: 'Login realizado com sucesso'})
-                // return res.status(200).json({message: 'Login realizado com sucesso', usuario})
+                const token = jwt.sign(
+                    //payload
+                    {id: usuario.id_usuario, nome: usuario.nome, email: usuario.email},
+                    //signature
+                    SECRET_KEY,
+                    // {expiresIn: '1h'}
+                )
+                return res.status(200).json({token,
+                    id_usuario: usuario.id_usuario,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    tipo_acesso: usuario.tipo_acesso})
             }
             catch(error){
-                console.error('Erro ao realizar login:', error)
+                console.error('Erro ao realizar login', error)
                 return res.status(500).json({message: 'Erro ao realizar login', erro: error.message})
             }
     }
+}
+
+//autenticando as rotas de usuarios
+export function autenticarToken(req,res, next){
+        //Extrair do token o cabeçalho da requisição
+        const token = req.headers['authorization']//Bearer<token>
+   
+        //verificar se o token foi fornecido na requisição
+        if(!token) return res.status(403).json({mensagem: 'Token não fornecido'})
+           
+        //verificar a validade do token
+        //jwt.verify que valida se o token é legitimo
+        jwt.verify(token.split(' ') [1], SECRET_KEY, (err, usuario) =>{
+   
+            if(err) return res.status(403).json({mensagem: 'Token invalido'})
+   
+            //se o token for valido, adiciona os dados do usuario(decodificando no token)
+            //tornando essas informações disponiveis nas rotas que precisam de autorização
+            req.usuario = usuario
+            next();
+        })
 }
 
 export default rotasUsuarios;
