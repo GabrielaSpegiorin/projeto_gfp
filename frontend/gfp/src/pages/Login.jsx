@@ -8,6 +8,7 @@ function Login () {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate()
+  const [lembrar, setLembrar] = useState(false);
  
   async function botaoEntrar(e) {
     e.preventDefault();
@@ -61,88 +62,21 @@ function Login () {
             <label>Senha</label>
             <input onChange={(e) => setSenha(e.target.value)} value={senha} type="password" placeholder="Digite sua senha" required />
           </div>
+          <div style ={{display: 'flex', alignItems: 'center'}}>
+            <input type="checkbox" style ={{marginRight: '5px'}} 
+            checked={lembrar} onChange={(e) => setLembrar(e.target.checked)}/>
+            <label> Lembrar-me</label>
+          </div>
+
           <button onClick={botaoEntrar} type="submit" className="login-button">Entrar</button>
           <button onClick={botaoLimpar} type="submit" className="login-button">Limpar</button>
         </div>
-      </div>
+      </div>id
     </div>
   );
 }
 
 export default Login;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-
-// export default function Login() {
-//     const navigate = useNavigate();
-
-//     const containerStyle = {
-//         display: 'flex',
-//         flexDirection: 'column',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         height: '100vh',
-//         backgroundColor: '#f0f0f0',
-//         padding: '20px',
-//     };
-
-//     const titleStyle = {
-//         fontSize: '30px',
-//         fontWeight: 'bold',
-//         color: '#333',
-//         marginBottom: '20px',
-//     };
-
-//     const buttonContainerStyle = {
-//         display: 'flex',
-//         justifyContent: 'center',
-//         width: '100%',
-//     };
-
-//     const buttonStyle = {
-//         padding: '10px 20px',
-//         fontSize: '16px',
-//         backgroundColor: 'purple',
-//         color: 'white',
-//         border: 'none',
-//         borderRadius: '5px',
-//         cursor: 'pointer',
-//         transition: 'background-color 0.3s ease',
-//     };
-
-//     const buttonHoverStyle = {
-//         backgroundColor: 'green',
-//     };
-
-//     return (
-//         <div style={containerStyle}>
-//             <h1 style={titleStyle}>Tela de Login</h1>
-//             <div style={buttonContainerStyle}>
-//                 <button
-//                     style={buttonStyle}
-//                     onClick={() => navigate('/principal')}
-//                     onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-//                     onMouseOut={(e) => (e.target.style.backgroundColor = buttonStyle.backgroundColor)}
-//                 >
-//                     Entrar
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// }
 
   

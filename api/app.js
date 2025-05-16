@@ -4,7 +4,7 @@ import cors from 'cors'
 import rotasUsuarios, { autenticarToken } from './routes/rotasUsuarios.js';
 import rotasCategorias from './routes/rotasCategorias.js';
 import rotasSubCategorias from './routes/rotasSubCategorias.js';
-import rotasLocalTransacoes from './routes/RotasLocalTransacoes.js';
+import rotasContas from './routes/RotasContas.js';
 import rotasTransacoes from './routes/RotasTransacoes.js';
 
 const app = express()
@@ -28,6 +28,7 @@ app.post('/usuarios/login', rotasUsuarios.login)
 
 //Rotas de categorias // CERTO
 app.post('/categorias', rotasCategorias.novaCategoria)
+app.get('/categorias/filtrarCategoria', autenticarToken, rotasCategorias.filtrarCategoria)
 app.get('/categorias/:id_categoria', autenticarToken, rotasCategorias.listarCategoriasPorID)
 app.get('/categorias', autenticarToken, rotasCategorias.listarCategorias)
 app.delete('/categorias/:id_categoria', rotasCategorias.deletarCategoria)
@@ -42,15 +43,19 @@ app.put('/subcategorias/:id_subcategoria', rotasSubCategorias.atualizarTodosSubC
 app.patch('/subcategorias/:id_subcategoria', rotasSubCategorias.atualizarSubCategoria)
 app.delete('/subcategorias/:id_subcategoria', rotasSubCategorias.deletarSubCategoria)
 
-//Rotas Local Transações //CERTO
-app.post('/localtransacoes', rotasLocalTransacoes.novaLocalTransacoes)
-app.get('/transacoes', rotasLocalTransacoes.listarTransacoes)
-app.get('/transacoes/:id_usuario', rotasLocalTransacoes.listarTransacoesPorID)  
-app.patch('/transacoes/:id_transacao', rotasLocalTransacoes.atualizarTransacoes)
-app.put('/transacoes/:id_transacao', rotasLocalTransacoes.atualizarTodosTransacoes)
-app.delete('/transacoes/:id_transacao', rotasLocalTransacoes.deletarTransacoes)
+//Rotas Contas //
+app.post('/contas', rotasContas.novaContas)
+app.get('/contas/filtrarCategoria', autenticarToken, rotasContas.filtrarContas)
+app.get('/contas', rotasContas.listarContas)
+app.get('/contas/:id_usuario', rotasContas.listarContasPorID)  
+app.patch('/contas/:id_transacao', rotasContas.atualizarContas)
+app.put('/contas/:id_transacao', rotasContas.atualizarTodasContas)
+app.delete('/contas/:id_transacao', rotasContas.deletarContas)
 
 //Rotas Transações //CERTO
+app.get('/transacoes/filtroData', rotasTransacoes.filtrarPorData)
+app.get('/transacoes/transacoesVencidas/id:usuario', rotasTransacoes.transacoesVencidas)
+app.get('/transacoes/somarTransacoes', rotasTransacoes.somarTransacoes)
 app.post('/transacoes', rotasTransacoes.novaTransacoes)
 app.get('/transacoes', rotasTransacoes.listarTransacoes)
 app.get('/transacoes/:id_transacao', rotasTransacoes.listarTransacoesPorID)  
