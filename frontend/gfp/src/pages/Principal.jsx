@@ -25,6 +25,16 @@ export default function Principal() {
     };
     
     return (
-        <h1> Tela Principal</h1>
+        <div>
+            <div style ={{ display: 'flex', flexDirection: 'row',
+                justifyContent: 'space-between', alignItems: 'center',}}>
+                <p>Usuário: {usuario.nome}</p>    
+                <button onClick={botaoLogout}>Sair</button>
+            </div>
+            <div style = {{padding: '20px'}}>
+                <h2>Principal</h2>
+            </div>
+        </div>
+       
     );
 }

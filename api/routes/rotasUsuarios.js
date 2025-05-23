@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 const SECRET_KEY = "chave_api_gfp"
 
 class rotasUsuarios{
-    static async novoUsuario(req, res){ //CERTO
+    static async novoUsuario(req, res){ 
         const { nome, email, senha, tipo_acesso } = req.body;
        
         const saltRounds = 10;

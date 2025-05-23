@@ -16,8 +16,8 @@ import Estilos_Login from '../style/Estilos_login';
 import Estilos, { corPrincipal, corSecundaria, corFundo, corFundo2, corTextos, corTextos2 } from '../style/Estilos';
 
 const Login = ({ navigation }) => {
-    const [email, setEmail] = useState('gabrielacspegiorin@gmail.com');
-    const [senha, setSenha] = useState('123');
+    const [email, setEmail] = useState('mavie@gmail.com');
+    const [senha, setSenha] = useState('DaviLucca');
     const [showPassword, setShowPassword] = useState(false);
     const [isActive, setIsActive] = useState(false);
     const [lembrar, setLembrar] = useState(false);
