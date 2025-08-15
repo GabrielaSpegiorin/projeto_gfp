@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -76,7 +76,7 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={Estilos_Login.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
+            <StatusBar barStyle="light-content" backgroundColor="#fff" />
             <LinearGradient
                 colors={['#2c3e50', corPrincipal]}
                 style={Estilos_Login.gradientBackground}

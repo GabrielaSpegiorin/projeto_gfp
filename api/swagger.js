@@ -12,21 +12,17 @@ const swaggerDefinition = {
             url: 'http://localhost:3000/',
             description: 'Servidor Local'
         },
-        {
-            url: 'https://192.168.0.237.3000',
-            description: 'Servidor de API do Douglas'
-        }
     ],
     tags: [
-        {
-            name: 'Usuarios',
-            description: 'Rotas para cadastro, login, atualização e desativação de usuários'
-        }
-        ,
-        {
-            name: 'Categorias',
-            description: 'Rotas para cadastro, atualização, filtragem e listagem de categorias'
-        }
+        // {
+        //     name: 'Usuarios',
+        //     description: 'Rotas para cadastro, login, atualização e desativação de usuários'
+        // }
+        // ,
+        // {
+        //     name: 'Categorias',
+        //     description: 'Rotas para cadastro, atualização, filtragem e listagem de categorias'
+        // }
     ],
     components: {
         securitySchemes: {

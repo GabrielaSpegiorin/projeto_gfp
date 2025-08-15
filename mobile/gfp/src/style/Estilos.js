@@ -9,9 +9,9 @@ export const corBorda = '#262626';
 
 
 const Estilos = {
-    conteudo : {
-        flex : 1,
-        width : '100%',
+    conteudo: {
+        flex: 1,
+        width: '100%',
         backgroundColor: corFundo
     },
     inputContainer: {
@@ -64,11 +64,11 @@ const Estilos = {
     },
 
     conteudoHeader: {
-      flex: 1,
-      backgroundColor: 'white',
+        flex: 1,
+        backgroundColor: 'white',
     },
 
-    conteudoCorpo:{
+    conteudoCorpo: {
         flex: 1,
         backgroundColor: 'fff',
         borderTopLeftRadius: 25,
@@ -76,34 +76,34 @@ const Estilos = {
         padding: 15,
     },
 
-    imagemLista:{
+    imagemLista: {
         width: 35,
         height: 35,
         marginRight: 10,
     },
 
-    ItemLista:{
+    ItemLista: {
         flexDirection: 'row',
         alignItems: 'center',
-       borderBottomWidth: 1,
-         borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
         paddingVertical: 7,
     },
 
-    textContainer:{
+    textContainer: {
         flex: 1,
     },
 
-    nomeLista:{
+    nomeLista: {
         fontSize: 16,
         fontWeight: 'bold',
         color: corSecundaria,
 
     },
 
-    inputCad:{
+    inputCad: {
         marginTop: 5,
-      borderWidth: 1,
+        borderWidth: 1,
         marginBottom: 10,
         borderColor: '#ccc',
         padding: 10,
@@ -111,8 +111,76 @@ const Estilos = {
         backgroundColor: '#fff',
     },
 
+    modalFundo: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+
+    },
+
+    modalConteudo: {
+        backgroundColor: 'corSecundaria',
+        padding: 16,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+    },
+
+    modalTitulo: {
+        fontSize: 18,
+        color: corTextos,
+        marginBottom: 16,
+    },
+
+    inputModal: {
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        padding: 8,
+        flex: 1,
+    },
+
+    modalBotoes: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 16,
+    },
+
+    corBotao:{
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        margin: 8,
+        borderWidth: 2,
+        borderColor: 'fff',
+        alignItems: 'center',
+        justifyContent: 'center', 
+    },
+
+    iconeBotao:{
+        width: 40,
+        height: 40,
+        padding: 8,
+        backgroundColor: '#333',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    SeletorContainer:{
+        backgroundColor: '#1e1e1e',
+        padding: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+    },
+
+    listaModal:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 8,
+    }
 }
-    
+
 
 
 export default Estilos;

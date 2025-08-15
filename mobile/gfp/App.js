@@ -19,7 +19,8 @@ export default function App() {
             headerTintColor: '#fff',
         }}>
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="MenuDrawer" component={MenuDrawer}/>
+        <Stack.Screen name="MenuDrawer" component={MenuDrawer}
+        options={{headerShown: false}}/>
         <Stack.Screen name="CadContas" component={CadContas}
         options={{title: 'Cadastro de Contas'}} />
         
